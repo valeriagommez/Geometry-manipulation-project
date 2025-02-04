@@ -1,0 +1,52 @@
+def erase_edge(self, edge):
+        # TODO: Objective 3c: erase the edge
+        hEdge = edge.halfedge
+        hEdge1 = hEdge.next 
+        hEdge2 = hEdge.prev
+        hEdge3 = hEdge.twin.next
+        hEdge4 = hEdge.twin.prev
+        face1 = hEdge.face
+        face2 = hEdge.twin.face
+        verticesNew = face1.vertices
+        # print("verticesNew (face1.vertices) : ")
+        # for vertex in verticesNew:
+        #     print(vertex.index)
+        for vertex in face2.vertices :
+            if not (vertex in verticesNew):     # add the vertices from face 2 to verticesNew (avoid repeating)
+                verticesNew.append(vertex)
+                # print("vertex in f2 not in f1 : ", vertex.index)
+        
+        # print("verticesNew (all edges) : ")
+        # for vertex in verticesNew:
+        #     print(vertex.index)
+        
+        face1.vertices = verticesNew
+        
+        # print("face1.vertices : ")
+        # print("face1.vertices.length : ", len(face1.vertices))
+        # for vertex in face1.vertices:
+        #     print(vertex.index)
+        
+        # print("end of erase_edge()")
+        # Linking all the remaining half-edges together
+        hEdge1.next = hEdge2
+        hEdge2.next = hEdge3
+        hEdge3.next = hEdge4
+        hEdge4.next = hEdge1
+        hEdge1.prev = hEdge4
+        hEdge2.prev = hEdge1
+        hEdge3.prev = hEdge2
+        hEdge4.prev = hEdge3  
+        # Making them all point to face1 (the one we won't delete)
+        hEdge1.face = face1
+        hEdge2.face = face1
+        hEdge3.face = face1
+        hEdge4.face = face1
+        self.faces = np.delete(self.faces, face2.index)
+        self.edges = np.delete(self.edges, edge.index)
+        self.halfedges = np.delete(self.halfedges, hEdge.index)
+        self.update_indices()
+        self.halfedges = np.delete(self.halfedges, hEdge.twin.index)
+        self.update_indices()
+
+        self.sanity_check()
