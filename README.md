@@ -1,6 +1,6 @@
 # Mesh manipulation project
 ## Overview
-This project involves implementing a **Half-Edge Data Structure** for mesh editing, allowing for various edge and face operations such as flipping, splitting, extruding, and more. The final goal is to utilize these operations to design a 3D object and export it as a mesh file.
+This project involves implementing a **Half-Edge Data Structure** for mesh editing, allowing for various edge and face operations such as flipping, splitting, extruding, and more. You can utilize these operations to design a 3D object and export it as a mesh file.
 
 ## Features
 - Construct a **Half-Edge Data Structure** from a given mesh.
